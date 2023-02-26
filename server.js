@@ -3,8 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./db/db");
-const volunteerSlots = require("./routers/volunteerSlots");
-const users = require("./routers/users");
+// const volunteerSlots = require("./routers/volunteerSlots");
+// const users = require("./routers/users");
 
 const app = express();
 app.use(cors());
@@ -14,31 +14,31 @@ app.use(express.urlencoded({ extended: false }));
 connectDB(process.env.MONGODB_URI);
 
 // Route to all volunteer endpoints
-app.use("/volunteer-slots", volunteerSlots);
+// app.use("/volunteer-slots", volunteerSlots);
 
 // Route to all user endpoints
-app.use("/users", users);
+// app.use("/users", users);
 
 // Seed data:
-const seed = require("./models/SeedData");
-const VolunteerSlots = require("./models/VolunteerSlots");
+const userSeed = require("./models/userSeed");
+const cocktailSeed = require("./models/cocktailSeed");
+const userSchema = require("./models/user");
+const cocktailSchema = require("./models/cocktail");
 
 app.get("/seed", async (req, res) => {
-  seed.forEach((item) => {
-    const newItem = {
-      date: item.date,
-      orig_slots_available: item.orig_slots_available,
-      sign_ups: item.sign_ups,
-    };
-  });
-  console.log(seed);
-  await VolunteerSlots.create(seed, (err, createdUsers) => {
+  userSchema.create(userSeed, (err, data) => {
     if (err) {
-      console.log(err);
-      res.status(400).json({ status: "error", message: "seeding error" });
+      console.log(err.message);
     } else {
-      // logs created users
-      console.log(createdUsers);
+      console.log("user added");
+    }
+  });
+
+  cocktailSchema.create(cocktailSeed, (err, data) => {
+    if (err) {
+      console.log(err.message);
+    } else {
+      console.log("cocktail added");
     }
   });
 });

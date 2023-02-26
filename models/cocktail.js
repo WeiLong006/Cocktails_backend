@@ -4,7 +4,7 @@ const CocktailsSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     category: { type: String, required: false },
-    instructions: { type: String, required: true },
+    instruction: { type: String, required: true },
     glass: { type: String, required: true },
     ingredient1: { type: String, required: true },
     ingredient2: { type: String, required: false },
@@ -14,7 +14,7 @@ const CocktailsSchema = new mongoose.Schema(
     image: { type: String, required: false },
   },
   {
-    collection: "cocktails",
+    collection: "Cocktails",
   }
 );
 
