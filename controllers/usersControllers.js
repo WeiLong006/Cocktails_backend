@@ -72,6 +72,7 @@ const createUser = async (req, res) => {
       mobile_number: req.body.mobile_number,
       email: req.body.email,
       hash: hash,
+      role: req.body.role,
     });
     await newUser.save();
     return res.json({ status: "ok", message: "User Created" });
@@ -79,6 +80,21 @@ const createUser = async (req, res) => {
     console.log("PUT /users/create", error);
     res.status(400).json({ status: "error", message: "an error has occured" });
   }
+};
+
+const deleteUser = async (req, res) => {
+  const delUser = Users.findOne({ email: req.body.email });
+
+  if (!delUser) {
+    return res.status(400).json({
+      status: "error",
+      message: "User does not exist!",
+    });
+  }
+
+  await Users.deleteOne(delUser);
+  console.log(delUser);
+  return res.json("User deleted");
 };
 
 //Generate refresh token
@@ -107,5 +123,6 @@ const refreshToken = async (req, res) => {
 module.exports = {
   createUser,
   signIn,
+  deleteUser,
   refreshToken,
 };

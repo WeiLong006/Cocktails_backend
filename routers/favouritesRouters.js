@@ -13,7 +13,7 @@ router.get("/favourites", getFave);
 router.put("/create-fave", createFave);
 
 // Delete Fave
-router.delete("/delete", deleteFave);
+router.delete("/delete-fave", deleteFave);
 
 // // Refresh access_token
 // router.post("/refresh", getRefreshToken);
