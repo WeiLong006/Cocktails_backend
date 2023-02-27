@@ -5,6 +5,7 @@ const {
   signIn,
   refreshToken,
   deleteUser,
+  updatePassword,
 } = require("../controllers/usersControllers");
 
 // Create new user
@@ -18,5 +19,8 @@ router.post("/refresh", refreshToken);
 
 //Delete User
 router.delete("/delete-user", deleteUser);
+
+//Update password
+router.patch("/update-password", updatePassword);
 
 module.exports = router;

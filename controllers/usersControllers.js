@@ -82,6 +82,7 @@ const createUser = async (req, res) => {
   }
 };
 
+//delete user
 const deleteUser = async (req, res) => {
   const delUser = Users.findOne({ email: req.body.email });
 
@@ -95,6 +96,27 @@ const deleteUser = async (req, res) => {
   await Users.deleteOne(delUser);
   console.log(delUser);
   return res.json("User deleted");
+};
+
+//Update password
+const updatePassword = async (req, res) => {
+  try {
+    const user = Users.findOne({ email: req.body.email });
+    if (user) {
+      const hash = await bcrypt.hash(req.body.password, 15);
+      await Users.updateOne(user, hash);
+      console.log(req.body.password);
+      return res.json("password updated!");
+    } else {
+      return res.status(400).json({
+        status: "error",
+        message: "User does not exist!",
+      });
+    }
+  } catch (error) {
+    console.log("POST /users/refresh", error);
+    res.status(401).json({ status: "error", message: "update failed" });
+  }
 };
 
 //Generate refresh token
@@ -124,5 +146,6 @@ module.exports = {
   createUser,
   signIn,
   deleteUser,
+  updatePassword,
   refreshToken,
 };
