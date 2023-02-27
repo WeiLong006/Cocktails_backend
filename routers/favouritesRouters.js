@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { getFave, createFave } = require("../controllers/favouritesControllers");
+const {
+  getFave,
+  createFave,
+  deleteFave,
+} = require("../controllers/favouritesControllers");
 
 // Get user favourites
 router.get("/favourites", getFave);
@@ -8,8 +12,8 @@ router.get("/favourites", getFave);
 // // Create new faveourites
 router.put("/create-fave", createFave);
 
-// // Login
-// router.post("/login", login);
+// Delete Fave
+router.delete("/delete", deleteFave);
 
 // // Refresh access_token
 // router.post("/refresh", getRefreshToken);
