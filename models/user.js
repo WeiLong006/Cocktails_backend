@@ -6,6 +6,7 @@ const UsersSchema = new mongoose.Schema(
     mobile_number: { type: String, required: true },
     email: { type: String, required: true, unique: true, lowercase: true },
     hash: { type: String, required: true },
+    role: { type: String, required: true },
   },
   {
     collection: "Users",

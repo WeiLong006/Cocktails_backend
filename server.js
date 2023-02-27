@@ -51,6 +51,7 @@ app.get("/seed", async (req, res) => {
       console.log("favourites added");
     }
   });
+  return res.json("seed successful");
 });
 
 app.listen(process.env.PORT, () => {
