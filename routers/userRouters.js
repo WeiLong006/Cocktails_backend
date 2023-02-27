@@ -6,6 +6,7 @@ const {
   refreshToken,
   deleteUser,
   updatePassword,
+  updateRole,
 } = require("../controllers/usersControllers");
 
 // Create new user
@@ -22,5 +23,8 @@ router.delete("/delete-user", deleteUser);
 
 //Update password
 router.patch("/update-password", updatePassword);
+
+//Update Role
+router.patch("/update-role", updateRole);
 
 module.exports = router;

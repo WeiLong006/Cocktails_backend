@@ -78,8 +78,24 @@ const deleteFave = async (req, res) => {
   }
 };
 
+const deleteAll = async (req, res) => {
+  console.log("deleting all fave");
+  try {
+    const user = { email: req.body.email };
+    await favourites.deleteMany(user);
+    console.log(user);
+    return res.json("All your favourites has been deleted!");
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(400)
+      .json({ status: "error", message: "could not create new fave" });
+  }
+};
+
 module.exports = {
   getFave,
   createFave,
   deleteFave,
+  deleteAll,
 };

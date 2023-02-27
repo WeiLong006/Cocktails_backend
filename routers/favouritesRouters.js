@@ -4,6 +4,7 @@ const {
   getFave,
   createFave,
   deleteFave,
+  deleteAll,
 } = require("../controllers/favouritesControllers");
 
 // Get user favourites
@@ -15,7 +16,7 @@ router.put("/create-fave", createFave);
 // Delete Fave
 router.delete("/delete-fave", deleteFave);
 
-// // Refresh access_token
-// router.post("/refresh", getRefreshToken);
+// Delete All
+router.delete("/delete-all", deleteAll);
 
 module.exports = router;

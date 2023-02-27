@@ -104,9 +104,31 @@ const updatePassword = async (req, res) => {
     const user = Users.findOne({ email: req.body.email });
     if (user) {
       const hash = await bcrypt.hash(req.body.password, 15);
-      await Users.updateOne(user, hash);
+      const updateHash = { $set: { hash: hash } };
+      await Users.updateOne(user, updateHash);
       console.log(req.body.password);
-      return res.json("password updated!");
+      return res.json(`Password updated!`);
+    } else {
+      return res.status(400).json({
+        status: "error",
+        message: "User does not exist!",
+      });
+    }
+  } catch (error) {
+    console.log("POST /users/refresh", error);
+    res.status(401).json({ status: "error", message: "update failed" });
+  }
+};
+
+//Update Role
+const updateRole = async (req, res) => {
+  try {
+    const user = Users.findOne({ email: req.body.email });
+    if (user) {
+      const newRole = { role: req.body.role };
+      await Users.updateOne(user, newRole);
+      console.log(newRole);
+      return res.json(`Role has been updated for ${user} to ${req.body.role}!`);
     } else {
       return res.status(400).json({
         status: "error",
@@ -147,5 +169,6 @@ module.exports = {
   signIn,
   deleteUser,
   updatePassword,
+  updateRole,
   refreshToken,
 };
