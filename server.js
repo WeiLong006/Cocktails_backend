@@ -22,8 +22,10 @@ connectDB(process.env.MONGODB_URI);
 // Seed data:
 const userSeed = require("./models/userSeed");
 const cocktailSeed = require("./models/cocktailSeed");
+const favouritesSeed = require("./models/favouritesSeed");
 const userSchema = require("./models/user");
 const cocktailSchema = require("./models/cocktail");
+const favouritesSchema = require("./models/favourites");
 
 app.get("/seed", async (req, res) => {
   userSchema.create(userSeed, (err, data) => {
@@ -39,6 +41,14 @@ app.get("/seed", async (req, res) => {
       console.log(err.message);
     } else {
       console.log("cocktail added");
+    }
+  });
+
+  favouritesSchema.create(favouritesSeed, (err, data) => {
+    if (err) {
+      console.log(err.message);
+    } else {
+      console.log("favourites added");
     }
   });
 });
