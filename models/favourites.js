@@ -12,6 +12,7 @@ const FavouritesSchema = new mongoose.Schema(
     ingredient4: { type: String, required: false },
     ingredient5: { type: String, required: false },
     image: { type: String, required: false },
+    email: { type: String, required: true },
   },
   {
     collection: "Favourites",

@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./db/db");
-// const volunteerSlots = require("./routers/volunteerSlots");
+const fave = require("./routers/favouritesRouters");
 const users = require("./routers/userRouters");
 
 const app = express();
@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 connectDB(process.env.MONGODB_URI);
 
 // Route to all volunteer endpoints
-// app.use("/volunteer-slots", volunteerSlots);
+app.use("/fave", fave);
 
 // Route to all user endpoints
 app.use("/users", users);
