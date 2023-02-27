@@ -4,10 +4,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 
-const Users = require("../models/Users");
+const Users = require("../models/user");
 
 //Sign in
 const signIn = async (req, res) => {
+  console.log("signing in");
   try {
     //check if email exists
     const user = await Users.findOne({ email: req.body.email });
@@ -29,29 +30,30 @@ const signIn = async (req, res) => {
         name: user.name,
       };
 
-      // Generate your access token via JWT
+      // Generate access token via JWT
       const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
         expiresIn: "20m",
         jwtid: uuidv4(),
       });
 
-      // Generate your refresh token via JWT
+      // Generate refresh token via JWT
       const refresh = jwt.sign(payload, process.env.REFRESH_SECRET, {
         expiresIn: "30D",
         jwtid: uuidv4(),
       });
 
       const response = { access, refresh };
-
-      res.json(response);
+      return res.json(response);
     }
   } catch (error) {
+    console.log("error");
     console.log("PUT /users/create", error);
     res.status(400).json({ status: "error", message: "an error has occured" });
   }
 };
 
 const createUser = async (req, res) => {
+  console.log("creating user");
   try {
     //check if email exists
     const user = await Users.findOne({ email: req.body.email });
@@ -72,15 +74,15 @@ const createUser = async (req, res) => {
       hash: hash,
     });
     await newUser.save();
-    res.json({ status: "ok", message: "User Created" });
+    return res.json({ status: "ok", message: "User Created" });
   } catch (error) {
     console.log("PUT /users/create", error);
     res.status(400).json({ status: "error", message: "an error has occured" });
   }
 };
 
-// Generate refresh token
-async function getRefreshToken(req, res) {
+//Generate refresh token
+const refreshToken = async (req, res) => {
   try {
     const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
 
@@ -100,10 +102,10 @@ async function getRefreshToken(req, res) {
     console.log("POST /users/refresh", error);
     res.status(401).json({ status: "error", message: "unauthorised" });
   }
-}
+};
 
 module.exports = {
   createUser,
   signIn,
-  getRefreshToken,
+  refreshToken,
 };

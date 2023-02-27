@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./db/db");
 // const volunteerSlots = require("./routers/volunteerSlots");
-// const users = require("./routers/users");
+const users = require("./routers/userRouters");
 
 const app = express();
 app.use(cors());
@@ -17,7 +17,7 @@ connectDB(process.env.MONGODB_URI);
 // app.use("/volunteer-slots", volunteerSlots);
 
 // Route to all user endpoints
-// app.use("/users", users);
+app.use("/users", users);
 
 // Seed data:
 const userSeed = require("./models/userSeed");
