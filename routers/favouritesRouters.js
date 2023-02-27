@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { getFave } = require("../controllers/favouritesControllers");
+const { getFave, createFave } = require("../controllers/favouritesControllers");
 
 // Get user favourites
 router.get("/favourites", getFave);
 
-// // Create new user
-// router.put("/create-new-user", createNewUser);
+// // Create new faveourites
+router.put("/create-fave", createFave);
 
 // // Login
 // router.post("/login", login);
