@@ -42,7 +42,7 @@ const signIn = async (req, res) => {
         jwtid: uuidv4(),
       });
 
-      const response = { access, refresh };
+      const response = { access, refresh, role: user.role };
       return res.json(response);
     }
   } catch (error) {
