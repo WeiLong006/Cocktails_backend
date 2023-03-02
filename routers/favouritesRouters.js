@@ -5,6 +5,7 @@ const {
   createFave,
   deleteFave,
   deleteAll,
+  searchCocktails,
 } = require("../controllers/favouritesControllers");
 
 // Get user favourites
@@ -18,5 +19,8 @@ router.delete("/delete-fave", deleteFave);
 
 // Delete All
 router.delete("/delete-all", deleteAll);
+
+// Search Cocktail
+router.get("/search", searchCocktails);
 
 module.exports = router;

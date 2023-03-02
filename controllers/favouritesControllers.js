@@ -1,4 +1,18 @@
 const favourites = require("../models/favourites");
+const cocktail = require("../models/cocktail");
+
+const searchCocktails = async (req, res) => {
+  try {
+    const search = await cocktail.find({
+      name: { $regex: req.body.name, $options: "i" },
+    });
+    return res.json(search);
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ status: "error", message: "cocktail not on list" });
+  }
+};
 
 // Get favourites of logged in user
 const getFave = async (req, res) => {
@@ -13,7 +27,6 @@ const getFave = async (req, res) => {
 };
 
 const createFave = async (req, res) => {
-  console.log("creating fave");
   try {
     const data = await favourites.findOne({
       name: req.body.name,
@@ -40,7 +53,6 @@ const createFave = async (req, res) => {
       email: req.body.email,
     };
     await favourites.insertMany(newFave);
-    console.log(newFave);
     return res.json(newFave);
   } catch (error) {
     console.log(error);
@@ -51,9 +63,7 @@ const createFave = async (req, res) => {
 };
 
 const deleteFave = async (req, res) => {
-  console.log("deleting fave");
   try {
-    console.log("trying to delete fave");
     const oldFave = {
       name: req.body.name,
       category: req.body.category,
@@ -68,10 +78,8 @@ const deleteFave = async (req, res) => {
       email: req.body.email,
     };
     await favourites.deleteOne(oldFave);
-    console.log(oldFave);
     return res.json(oldFave);
   } catch (error) {
-    console.log(error);
     return res
       .status(400)
       .json({ status: "error", message: "could not create new fave" });
@@ -79,14 +87,11 @@ const deleteFave = async (req, res) => {
 };
 
 const deleteAll = async (req, res) => {
-  console.log("deleting all fave");
   try {
     const user = { email: req.body.email };
     await favourites.deleteMany(user);
-    console.log(user);
     return res.json("All your favourites has been deleted!");
   } catch (error) {
-    console.log(error);
     return res
       .status(400)
       .json({ status: "error", message: "could not create new fave" });
@@ -98,4 +103,5 @@ module.exports = {
   createFave,
   deleteFave,
   deleteAll,
+  searchCocktails,
 };
