@@ -21,6 +21,6 @@ router.delete("/delete-fave", deleteFave);
 router.delete("/delete-all", deleteAll);
 
 // Search Cocktail
-router.get("/search", searchCocktails);
+router.post("/search", searchCocktails);
 
 module.exports = router;

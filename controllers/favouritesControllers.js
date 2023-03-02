@@ -6,6 +6,7 @@ const searchCocktails = async (req, res) => {
     const search = await cocktail.find({
       name: { $regex: req.body.name, $options: "i" },
     });
+    console.log(req.body);
     return res.json(search);
   } catch (error) {
     return res
