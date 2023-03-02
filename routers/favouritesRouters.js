@@ -9,16 +9,16 @@ const {
 } = require("../controllers/favouritesControllers");
 
 // Get user favourites
-router.get("/favourites", getFave);
+router.post("/favourites", getFave);
 
 // // Create new faveourites
 router.put("/create-fave", createFave);
 
 // Delete Fave
-router.delete("/delete-fave", deleteFave);
+router.post("/delete-fave", deleteFave);
 
 // Delete All
-router.delete("/delete-all", deleteAll);
+router.post("/delete-all", deleteAll);
 
 // Search Cocktail
 router.post("/search", searchCocktails);
