@@ -8,6 +8,7 @@ const {
   updatePassword,
   updateRole,
 } = require("../controllers/usersControllers");
+const auth = require("../Authentication/auth");
 
 // Create new user
 router.put("/create-user", createUser);
