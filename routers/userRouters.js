@@ -19,7 +19,7 @@ router.post("/sign-in", signIn);
 router.post("/refresh", refreshToken);
 
 //Delete User
-router.delete("/delete-user", deleteUser);
+router.post("/delete-user", deleteUser);
 
 //Update password
 router.patch("/update-password", updatePassword);
