@@ -9,6 +9,7 @@ const auth_admin = (req, res, next) => {
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
+      console.log(decoded);
       req.decoded = decoded;
 
       if (decoded.role !== "admin") {
@@ -20,10 +21,18 @@ const auth_admin = (req, res, next) => {
 
       next();
     } catch (error) {
-      return res.status(401).send({
-        status: "error",
-        message: "Not Authorised",
-      });
+      if (error instanceof jwt.TokenExpiredError) {
+        return res.status(401).send({
+          status: "error",
+          message: "Expired",
+        });
+      } else {
+        console.log(error);
+        return res.status(401).send({
+          status: "error",
+          message: "Not Authorised",
+        });
+      }
     }
   } else {
     return res.status(403).json({

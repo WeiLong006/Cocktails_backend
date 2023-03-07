@@ -23,7 +23,7 @@ router.post("/refresh", refreshToken);
 router.post("/delete-user", deleteUser);
 
 //Update password
-router.patch("/update-password", updatePassword);
+router.patch("/update-password", auth, updatePassword);
 
 //Update Role
 router.patch("/update-role", updateRole);

@@ -33,7 +33,7 @@ const signIn = async (req, res) => {
 
       // Generate access token via JWT
       const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
-        expiresIn: "20m",
+        expiresIn: "5s",
         jwtid: uuidv4(),
       });
 
@@ -146,10 +146,13 @@ const updateRole = async (req, res) => {
 const refreshToken = async (req, res) => {
   try {
     const decoded = jwt.verify(req.body.refresh, process.env.REFRESH_SECRET);
+    console.log(decoded);
 
     const payload = {
       id: decoded.id,
       name: decoded.name,
+      email: decoded.email,
+      role: decoded.role,
     };
 
     const access = jwt.sign(payload, process.env.ACCESS_SECRET, {
